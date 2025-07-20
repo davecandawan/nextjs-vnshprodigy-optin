@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import FooterModal from './FooterModal';
 
@@ -58,17 +59,44 @@ const FooterLink: React.FC<FooterLinkProps> = ({ label, id, onClick }) => (
 );
 
 const FooterLinks: React.FC<{ loadInfo: (id: string) => void }> = ({ loadInfo }) => (
-  <div className="w-full text-lg text-center flex flex-wrap justify-center items-center space-x-4">
+  <div className="w-full text-base text-center font-medium flex flex-wrap justify-center items-center space-x-4">
     <FooterLink label="Terms & Disclaimer" id="terms-pop-modal" onClick={loadInfo} />
     <FooterLink label="Privacy Policy" id="privacy-policy-modal" onClick={loadInfo} />
     <FooterLink label="Shipping Policy" id="shipping-policy-modal" onClick={loadInfo} />
     <FooterLink label="Return Policy" id="return-policy-modal" onClick={loadInfo} />
+    <FooterLink label="Giveaway Terms" id="giveaway-terms-modal" onClick={loadInfo} />
   </div>
 );
 
 const Footer: React.FC = () => {
   const [modalId, setModalId] = useState<string>('');
   const [showModal, setShowModal] = useState<boolean>(false);
+
+  // Expose the showModal function to the window object
+  useEffect(() => {
+    const showModalHandler = (id: string) => {
+      setModalId(id);
+      setShowModal(true);
+      document.body.style.overflow = 'hidden';
+    };
+
+    // Set it on the window object
+    (window as any).showFooterModal = showModalHandler;
+
+    // Also handle custom events
+    const handleCustomEvent = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      showModalHandler(customEvent.detail);
+    };
+
+    window.addEventListener('showFooterModal', handleCustomEvent as EventListener);
+
+    // Clean up
+    return () => {
+      delete (window as any).showFooterModal;
+      window.removeEventListener('showFooterModal', handleCustomEvent as EventListener);
+    };
+  }, []);
 
   const loadInfo = (id: string) => {
     setModalId(id);
@@ -85,53 +113,64 @@ const Footer: React.FC = () => {
   return (
     <footer className="w-full mt-2 bg-white">
       <div className="py-8 text-black bg-white">
-        <div className="py-4">
-          <div className="box-border min-w-[250px] max-w-6xl mx-auto px-4 flex flex-wrap justify-around gap-6">
-            <FooterColumn
-              imgUrl="/contentimages/vnsh_money_back_guarantee_footer.webp"
-              title="60-Day Money Back Guarantee"
-              text="No question asked 60 day refund or replacement guaranteed. If you are unhappy for any reason, get your money back. Rock solid guarantee..."
-            />
-            <FooterColumn
-              imgUrl="/contentimages/vnsh_small_business_footer.webp"
-              title="Thank You!"
-              text="Your purchase supports the second amendment community and increases our ability to defend ourselves and remain free."
-            />
-            <FooterColumn
-              imgUrl="/contentimages/vnsh_secure_payment_footer.webp"
-              title="100% Secure Payment"
-              text="All orders are AES-256 Bit encrypted through a HTTPS secure network. We respect your privacy..."
-            />
-          </div>
-        </div>
-
         <div className="flex flex-col items-center">
           <div className="text-center text-black">
-            © <b>2025 VNSH.com</b> All Rights Reserved.
+            &copy; <b>2025 VNSH.com</b> All Rights Reserved.
           </div>
           <FooterLinks loadInfo={loadInfo} />
         </div>
       </div>
 
-      {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 p-4 pt-20" onClick={closeModal}>
-          <div
-            className="bg-white rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto relative p-6 mx-auto"
-            onClick={e => e.stopPropagation()}
+      <AnimatePresence>
+        {showModal && (
+          <motion.div
+            className="fixed inset-0 bg-black/70 z-[60] p-4 pt-20 overflow-hidden"
+            onClick={closeModal}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
           >
-            <button
-              className="absolute top-4 right-4 text-2xl text-black hover:text-black bg-transparent border-none hover:bg-transparent"
-              onClick={closeModal}
-              aria-label="Close modal"
+            <motion.div
+              className="bg-white border-2 border-gray-200 rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto relative p-6 mx-auto shadow-2xl"
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+              initial={{ opacity: 0, y: -100 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -100 }}
+              transition={{
+                type: 'spring',
+                damping: 20,
+                stiffness: 200,
+                mass: 0.5,
+                duration: 0.4,
+              }}
             >
-              &times;
-            </button>
-            <FooterModal modalId={modalId} closeModal={closeModal} />
-          </div>
-        </div>
-      )}
+              <motion.button
+                className="absolute top-4 right-4 text-2xl text-black hover:text-black bg-transparent border-none hover:bg-transparent"
+                onClick={closeModal}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                aria-label="Close modal"
+              >
+                &times;
+              </motion.button>
+              <FooterModal modalId={modalId} closeModal={closeModal} />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </footer>
   );
 };
+
+// Add global type declarations
+declare global {
+  interface Window {
+    showFooterModal(id: string): void;
+  }
+  interface WindowEventMap {
+    showFooterModal: CustomEvent<string>;
+  }
+}
 
 export default Footer;

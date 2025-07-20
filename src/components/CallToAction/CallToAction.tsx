@@ -6,12 +6,14 @@ interface CallToActionProps {
   buttonText?: string;
   className?: string;
   showTrialText?: boolean;
+  onClick?: () => void;
 }
 
 export default function CallToAction({
   buttonText = 'Give Me My VNSH Holster + FREE QuickDraw Gun Magnet',
   className = '',
   showTrialText = true,
+  onClick,
 }: CallToActionProps) {
   const searchParams = useSearchParams();
 
@@ -22,15 +24,24 @@ export default function CallToAction({
 
   return (
     <div className={className}>
-      <div className="text-center my-8 md:my-10">
-        <a
-          href={getCheckoutUrl('https://secure.vnsh.com/vns3qdbonus/checkout')}
-          className="inline-block"
-        >
-          <button className="bg-[#28a745] hover:bg-[#218838] text-white font-bold py-4 px-8 text-xl md:py-3 md:px-10 md:text-3xl transition-all duration-300 animate-custom-pulse hover:opacity-100 hover:scale-105 transform">
+      <div className="text-center my-8 md:my-8">
+        {onClick ? (
+          <button
+            onClick={onClick}
+            className="bg-[#28a745] hover:bg-[#218838] text-white font-bold py-4 px-8 text-xl md:py-3 md:px-10 md:text-3xl transition-all duration-300 animate-custom-pulse hover:opacity-100 hover:scale-105 transform"
+          >
             {buttonText}
           </button>
-        </a>
+        ) : (
+          <a
+            href={getCheckoutUrl('https://secure.vnsh.com/vns3qdbonus/checkout')}
+            className="inline-block"
+          >
+            <button className="bg-[#28a745] hover:bg-[#218838] text-white font-bold py-4 px-8 text-xl md:py-3 md:px-10 md:text-3xl transition-all duration-300 animate-custom-pulse hover:opacity-100 hover:scale-105 transform">
+              {buttonText}
+            </button>
+          </a>
+        )}
       </div>
       {showTrialText && (
         <div className="text-center my-8">
