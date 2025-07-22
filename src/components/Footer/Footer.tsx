@@ -59,7 +59,7 @@ const FooterLink: React.FC<FooterLinkProps> = ({ label, id, onClick }) => (
 );
 
 const FooterLinks: React.FC<{ loadInfo: (id: string) => void }> = ({ loadInfo }) => (
-  <div className="w-full text-base text-center font-medium flex flex-wrap justify-center items-center space-x-4">
+  <div className="w-full text-lg text-center font-medium flex flex-wrap justify-center items-center space-x-4">
     <FooterLink label="Terms & Disclaimer" id="terms-pop-modal" onClick={loadInfo} />
     <FooterLink label="Privacy Policy" id="privacy-policy-modal" onClick={loadInfo} />
     <FooterLink label="Shipping Policy" id="shipping-policy-modal" onClick={loadInfo} />
@@ -77,7 +77,6 @@ const Footer: React.FC = () => {
     const showModalHandler = (id: string) => {
       setModalId(id);
       setShowModal(true);
-      document.body.style.overflow = 'hidden';
     };
 
     // Set it on the window object
@@ -101,23 +100,23 @@ const Footer: React.FC = () => {
   const loadInfo = (id: string) => {
     setModalId(id);
     setShowModal(true);
-    document.body.style.overflow = 'hidden';
   };
 
   const closeModal = () => {
     setShowModal(false);
     setModalId('');
-    document.body.style.overflow = 'auto';
   };
 
   return (
     <footer className="w-full mt-2 bg-white">
-      <div className="py-8 text-black bg-white">
+      <div className="pt-1 pb-4 text-black bg-white">
         <div className="flex flex-col items-center">
-          <div className="text-center text-black">
+          <div className="text-center text-lg text-black mb-2 md:-mb-1">
             &copy; <b>2025 VNSH.com</b> All Rights Reserved.
           </div>
-          <FooterLinks loadInfo={loadInfo} />
+          <div className="mt-4">
+            <FooterLinks loadInfo={loadInfo} />
+          </div>
         </div>
       </div>
 
@@ -132,7 +131,7 @@ const Footer: React.FC = () => {
             transition={{ duration: 0.3, ease: 'easeOut' }}
           >
             <motion.div
-              className="bg-white border-2 border-gray-200 rounded-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto relative p-6 mx-auto shadow-2xl"
+              className="bg-white border-2 border-gray-200 rounded-lg max-w-4xl w-full max-h-[80vh] overflow-y-auto relative p-2 mx-auto shadow-2xl"
               onClick={(e: React.MouseEvent) => e.stopPropagation()}
               initial={{ opacity: 0, y: -100 }}
               animate={{ opacity: 1, y: 0 }}

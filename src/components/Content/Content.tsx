@@ -55,7 +55,7 @@ const Content: React.FC<ContentProps> = ({
               Enter Today And You May Take a Home a FREE Weapon From Our Co-Sponsor - Pain Safari
             </h1>
           </header>
-          <CallToAction buttonText={buttonText} showTrialText={false} onClick={openModal} />
+          <CallToAction buttonText={buttonText} onClick={openModal} />
           <SignupModal isOpen={isModalOpen} onClose={closeModal} />
         </div>
       </div>
@@ -98,7 +98,7 @@ const Content: React.FC<ContentProps> = ({
               Check Out Just How Sweet this Gun Is And Enter Now
             </h1>
           </header>
-          <CallToAction buttonText={buttonText} showTrialText={false} onClick={openModal} />
+          <CallToAction buttonText={buttonText} onClick={openModal} />
           {/* 3-Column Prodigy Images Section */}
           <div className="w-full pt-4 pb-4 px-0 -mt-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full mx-auto px-4">
@@ -265,7 +265,7 @@ const Content: React.FC<ContentProps> = ({
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-1">
               <div className="p-2 border-t-2 border-gray-200 pt-4">
                 <div className="font-bold text-xl md:text-2xl">SLIDE</div>
                 <div className="text-lg md:text-xl mt-1">
@@ -282,7 +282,7 @@ const Content: React.FC<ContentProps> = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-1">
               <div className="p-2 border-t-2 border-gray-200 pt-4">
                 <div className="font-bold text-xl md:text-2xl">RECOIL SYSTEM</div>
                 <div className="text-lg md:text-xl mt-1">2 Piece Full Length Guide Rod</div>
@@ -297,7 +297,7 @@ const Content: React.FC<ContentProps> = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-1">
               <div className="p-2 border-t-2 border-gray-200 pt-4">
                 <div className="font-bold text-xl md:text-2xl">WEIGHT</div>
                 <div className="text-lg md:text-xl mt-1">32.5 oz</div>
@@ -312,7 +312,7 @@ const Content: React.FC<ContentProps> = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-1">
               <div className="p-2 border-t-2 border-gray-200 pt-4">
                 <div className="font-bold text-xl md:text-2xl">MSRP</div>
                 <div className="text-lg md:text-xl mt-1">$1,599</div>
@@ -362,7 +362,7 @@ const Content: React.FC<ContentProps> = ({
       </div>
       <div className="w-full max-w-[1140px] mx-auto px-5 py-1 lg:px-20 bg-white">
         <div className="space-y-2"></div>
-        <CallToAction buttonText={buttonText} showTrialText={false} onClick={openModal} />
+        <CallToAction buttonText={buttonText} onClick={openModal} />
       </div>
     </div>
   );
