@@ -34,7 +34,7 @@ const Content: React.FC<ContentProps> = ({
         <div className="space-y-8">
           <header className="text-center py-1">
             <h1 className="font-sans text-[1.75rem] sm:text-[2.25rem] md:text-[2.5rem] font-bold leading-tight mb-5 px-2">
-              Will You Be the Winner of the BRAND NEW Compensated Springfield Prodigy??
+              Will You Be the Winner of the BRAND NEW Compensated Springfield Prodigy?
             </h1>
             <span className="text-xl md:text-3xl font-bold text-[#ff0000] px-4 pt-1 pb-0 inline-block italic">
               <span className="bg-[#ff0] px-1 py-1">Valued at $1,599 - It Could Be Yours Free</span>
